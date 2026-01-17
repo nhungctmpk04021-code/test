@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gieo Quẻ Đầu Năm 2026 - Xuân Bính Ngọ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CẤU HÌNH GIAO DIỆN --- */
+        :root {
+            --primary-red: #d32f2f;
+            --primary-gold: #ffd700;
+            --text-dark: #333;
+            --bg-cream: #fff8e1;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-red);
+            /* Họa tiết nền đồng tiền cổ mờ */
+            background-image: radial-gradient(circle, #b71c1c 10%, transparent 10.5%), radial-gradient(circle, #b71c1c 10%, transparent 10.5%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Khung chính */
+        .container {
+            background-color: var(--bg-cream);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 4px solid var(--primary-gold);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- LINH VẬT 2026 (CON NGỰA) --- */
+        .mascot {
+            position: absolute;
+            width: 80px; /* Kích thước con ngựa */
+            height: auto;
+            z-index: 20;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            animation: swing 3s infinite ease-in-out;
+        }
+
+        /* Vị trí Ngựa bên trái */
+        .mascot.left {
+            top: -40px;
+            left: -30px;
+            transform: rotate(-10deg);
+        }
+
+        /* Vị trí Ngựa bên phải */
+        .mascot.right {
+            top: -40px;
+            right: -30px;
+            transform: scaleX(-1) rotate(-10deg); /* Lật ngược ảnh để đối xứng */
+        }
+
+        /* Hiệu ứng lắc lư cho ngựa */
+        @keyframes swing {
+            0% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+        
+        /* Riêng cho con bên phải cần giữ lật ảnh khi lắc */
+        @keyframes swing-right {
+            0% { transform: scaleX(-1) rotate(-5deg); }
+            50% { transform: scaleX(-1) rotate(5deg); }
+            100% { transform: scaleX(-1) rotate(-5deg); }
+        }
+        .mascot.right { animation-name: swing-right; }
+
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-red);
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px var(--primary-gold);
+        }
+
+        .year-label {
+            display: inline-block;
+            background: var(--primary-red);
+            color: var(--primary-gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        p.subtitle {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        /* Form nhập liệu */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 8px rgba(211, 47, 47, 0.2);
+        }
+
+        /* Nút bấm */
+        button {
+            background: linear-gradient(45deg, #d32f2f, #ffca28);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+            transition: transform 0.2s;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #b71c1c, #ffb300);
+        }
+
+        /* Kết quả lời chúc */
+        #result-area {
+            margin-top: 30px;
+            display: none;
+            animation: zoomIn 0.5s ease;
+        }
+
+        .wish-card {
+            background-color: #fff;
+            border: 2px dashed var(--primary-red);
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Pattern nhẹ */
+        }
+
+        .wish-title {
+            color: var(--primary-red);
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .wish-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Hiệu ứng hoa rơi */
+        .falling-leaves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+        .falling-leaves span {
+            position: absolute;
+            display: block;
+            width: 15px;
+            height: 15px;
+            background: url('https://cdn-icons-png.flaticon.com/512/2275/2275852.png'); /* Hình hoa mai nhỏ */
+            background-size: cover;
+            animation: animate 10s linear infinite;
+        }
+        
+        @keyframes animate {
+            0% { top: -10%; opacity: 0; transform: translateX(0) rotate(0deg); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 110%; opacity: 0; transform: translateX(100px) rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .mascot { width: 60px; }
+            .mascot.left { left: -10px; top: -30px; }
+            .mascot.right { right: -10px; top: -30px; }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="falling-leaves" id="leaves"></div>
+
+    <div class="container">
+        <img src="https://cdn-icons-png.flaticon.com/512/2312/2312629.png" alt="Ngựa 2026" class="mascot left">
+        <img src="https://cdn-icons-png.flaticon.com/512/2312/2312629.png" alt="Ngựa 2026" class="mascot right">
+
+        <h1>Xin Chữ Đầu Năm</h1>
+        <div class="year-label">Xuân Bính Ngọ 2026 🐴</div>
+        <p class="subtitle">Nhập thông tin để nhận lời chúc "Mã Đáo Thành Công"</p>
+
+        <div id="input-form">
+            <div class="form-group">
+                <label for="fullName">Họ và Tên:</label>
+                <input type="text" id="fullName" placeholder="Ví dụ: Trần Văn B" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Tuổi (Dương lịch):</label>
+                <input type="number" id="age" placeholder="Ví dụ: 20" min="1" max="120">
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Giới tính:</label>
+                <select id="gender">
+                    <option value="male">Nam</option>
+                    <option value="female">Nữ</option>
+                    <option value="other">Khác</option>
+                </select>
+            </div>
+
+            <button onclick="getWish()">🧧 Gieo Quẻ Ngay</button>
+        </div>
+
+        <div id="result-area">
+            <div class="wish-card">
+                <div class="wish-title" id="greeting-title"></div>
+                <div class="wish-content" id="wish-text"></div>
+            </div>
+            <button onclick="resetForm()" style="margin-top:15px; background: #555; font-size: 0.9rem;">Gieo quẻ lại</button>
+        </div>
+
+        <div class="footer">
+            Chúc Mừng Năm Mới 2026 - Mã Đáo Thành Công
+        </div>
+    </div>
+
+    <script>
+        // Tạo hiệu ứng hoa rơi (Thay đổi chút để có cả hoa và bao lì xì)
+        const leavesContainer = document.getElementById('leaves');
+        const images = [
+            'https://cdn-icons-png.flaticon.com/512/2275/2275852.png', // Hoa mai
+            'https://cdn-icons-png.flaticon.com/512/6454/6454189.png'  // Bao lì xì
+        ];
+
+        for (let i = 0; i < 20; i++) {
+            let span = document.createElement('span');
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            span.style.animationDelay = Math.random() * 5 + 's';
+            // Random hình ảnh rơi
+            let randomImg = images[Math.floor(Math.random() * images.length)];
+            span.style.backgroundImage = `url('${randomImg}')`;
+            leavesContainer.appendChild(span);
+        }
+
+        // Dữ liệu lời chúc 2026 (Cập nhật theme Ngựa)
+        const wishes = {
+            kids: [
+                "khỏe như ngựa con, chạy nhảy tung tăng, nhận lì xì đầy túi!",
+                "học giỏi chăm ngoan, phi nhanh về đích, cha mẹ vui lòng.",
+                "ăn mau chóng lớn, sức khỏe dẻo dai, cả năm cười tít mắt."
+            ],
+            young: [
+                "năm ngựa phi nước đại, sự nghiệp chạy băng băng, tình duyên tới tấp.",
+                "mã đáo thành công, thi đâu đậu đó, người yêu gõ cửa.",
+                "sức trẻ dồi dào, bản lĩnh kiên cường, tiền đầy ví, tình đầy tim.",
+                "thăng tiến vù vù như ngựa xích thố, deadline không đuổi kịp."
+            ],
+            adult_male: [
+                "sự nghiệp thăng hoa, uy phong lẫm liệt như chiến mã.",
+                "mã đáo thành công, tiền vào như nước, gia đạo bình an.",
+                "vững tay cương, chèo lái gia đình ấm êm, công danh rạng rỡ.",
+                "sức khỏe dẻo dai, đánh đâu thắng đó, vạn sự hanh thông."
+            ],
+            adult_female: [
+                "tươi trẻ rạng ngời, giỏi việc nước đảm việc nhà, tiền tài rủng rỉnh.",
+                "hạnh phúc viên mãn, công việc thuận buồm xuôi gió.",
+                "nhan sắc thăng hạng, gia đình hạnh phúc, lộc lá quanh năm.",
+                "mạnh mẽ và quyến rũ, năm mới gặt hái ngàn thành công."
+            ],
+            elder: [
+                "phúc như Đông Hải, thọ tỷ Nam Sơn, con cháu sum vầy.",
+                "sức khỏe dẻo dai như tùng bách, vui vầy cùng con cháu.",
+                "năm mới an khang, tâm hồn thư thái, vạn sự bình an.",
+                "gia đạo hưng thịnh, lộc phước đầy nhà, bách niên giai lão."
+            ]
+        };
+
+        function getWish() {
+            const name = document.getElementById('fullName').value.trim();
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+
+            if (!name) {
+                alert("Thần Tài chưa biết tên bạn! Vui lòng nhập tên nhé.");
+                return;
+            }
+            if (!age || age <= 0) {
+                alert("Vui lòng nhập đúng số tuổi!");
+                return;
+            }
+
+            let selectedWishes = [];
+            let title = "";
+
+            // Logic chọn lời chúc
+            if (age < 15) {
+                title = `Bé ${name} đáng yêu,`;
+                selectedWishes = wishes.kids;
+            } else if (age >= 15 && age <= 25) {
+                title = `Bạn ${name} thân mến,`;
+                selectedWishes = wishes.young;
+            } else if (age > 25 && age <= 60) {
+                if (gender === 'male') {
+                    title = `Anh ${name} thân mến,`;
+                    selectedWishes = wishes.adult_male;
+                } else if (gender === 'female') {
+                    title = `Chị ${name} thân mến,`;
+                    selectedWishes = wishes.adult_female;
+                } else {
+                    title = `Bạn ${name} thân mến,`;
+                    selectedWishes = wishes.adult_male.concat(wishes.adult_female);
+                }
+            } else {
+                title = `Kính chúc cụ/ông/bà ${name},`;
+                selectedWishes = wishes.elder;
+            }
+
+            const randomWish = selectedWishes[Math.floor(Math.random() * selectedWishes.length)];
+
+            document.getElementById('greeting-title').innerText = title;
+            document.getElementById('wish-text').innerText = `Năm Bính Ngọ chúc ${name} ${randomWish}`;
+            
+            document.getElementById('input-form').style.display = 'none';
+            document.getElementById('result-area').style.display = 'block';
+        }
+
+        function resetForm() {
+            document.getElementById('input-form').style.display = 'block';
+            document.getElementById('result-area').style.display = 'none';
+            document.getElementById('fullName').value = "";
+            document.getElementById('age').value = "";
+        }
+    </script>
+</body>
+</html>
